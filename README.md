@@ -49,4 +49,4 @@ Caused by: java.lang.ClassCastException: class java.nio.channels.Channels$Readab
 ## Compressed vs Un-compressed Avro Files
 One important point worth noting is that this issue only seems to occur for compressed files. If we read in the un-compressed versions then the code works as expected. To demonstrate:
 1. Update `Demo.java` so that `LinkedList<String> files` reads in `"twitter1.avro"` and `"twitter1.avro"`, instead of the compressed versions
-2```./gradlew run```
+2. ```./gradlew run```
