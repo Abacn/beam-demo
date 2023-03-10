@@ -53,7 +53,7 @@ public class Demo {
                 .apply(ParDo.of(new DoFn<TwitterRecord, TwitterRecord>() {
                     @ProcessElement
                     public void processElement(ProcessContext c) {
-                        System.out.println("TWEET: User: " + c.element().getUsername() + "Tweet: " + c.element().getTweet());
+                        System.out.println("TWEET: User: " + c.element().getUsername() + ". Tweet: " + c.element().getTweet());
                     }
                 }));
         p.run();
