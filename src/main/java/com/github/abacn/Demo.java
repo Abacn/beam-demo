@@ -24,7 +24,7 @@ public class Demo {
   private static final String NAMESPACE = Demo.class.getName();
 
   // run on direct runner: ./gradlew run
-  // run on dataflow runner: ./gradlew run --args="--runner=DataflowRunner --project=bigquery-readapi-beam-test --region=us-central1 --tempLocation=***"
+  // run on dataflow runner: ./gradlew run --args="--runner=DataflowRunner --project=bigquery-readapi-beam-test --region=us-central1 --tempLocation=*** --enableBundling=True"
   public static void main(String[] args) {
     PipelineOptions options = PipelineOptionsFactory
             .fromArgs(args)
@@ -32,9 +32,9 @@ public class Demo {
 
     Pipeline p = Pipeline.create(options);
     PCollection<TableRow> input = p.apply(BigQueryIO.readTableRows()
-            .from("bigquery-readapi-beam-test:tpcds_1G.item")
+            .from("bigquery-readapi-beam-test:tpcds_1T.web_sales")
             .withMethod(BigQueryIO.TypedRead.Method.DIRECT_READ)
-            .withSelectedFields(Lists.newArrayList("i_item_id", "i_item_desc"))
+            .withSelectedFields(Lists.newArrayList("ws_sold_date_sk", "ws_sold_time_sk", "ws_ship_time_sk", "ws_list_price", "ws_sales_price"))
             .withFormat(DataFormat.AVRO));
     input.apply("Counting element", ParDo.of(new CountingFn<>(NAMESPACE, "read_element")));
     PipelineResult presult = p.run();
