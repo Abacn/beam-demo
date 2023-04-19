@@ -8,15 +8,15 @@ plugins {
 
 apply plugin : "java"
 ext {
-    javaMainClass = "beam.demo.Demo"
+    javaMainClass = "com.github.abacn.Demo"
 }
 
 application {
     mainClassName = javaMainClass
 }
 
-//def beam_version = "2.45.0"
-def beam_version = "2.34.0"
+def beam_version = "2.46.0"
+def slf4j_version = "1.7.36"
 
 repositories {
     mavenLocal()
@@ -25,10 +25,14 @@ repositories {
 
 dependencies {
     implementation group: 'org.apache.beam', name: 'beam-sdks-java-core', version: beam_version
+    implementation group: 'org.apache.beam', name: 'beam-sdks-java-io-google-cloud-platform', version: beam_version
     implementation group: 'org.apache.beam', name: 'beam-runners-direct-java', version: beam_version
+    implementation group: 'org.apache.beam', name: 'beam-runners-google-cloud-dataflow-java', version: beam_version
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: slf4j_version
 }
 
-group = 'com.carlpayne'
+group = 'com.github.abacn'
 version = '1.0'
 description = 'beam-demo'
-java.sourceCompatibility = JavaVersion.VERSION_11
+java.sourceCompatibility = JavaVersion.VERSION_1_8
