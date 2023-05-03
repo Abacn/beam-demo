@@ -15,11 +15,16 @@ application {
     mainClassName = javaMainClass
 }
 
-def beam_version = "2.46.0"
+def beam_version = "2.48.0-SNAPSHOT"
 def slf4j_version = "1.7.36"
 
 repositories {
     mavenLocal()
+    // to publish to local maven repository, in the beam repo, run sth like
+    // ./gradlew :sdks:java:io:google-cloud-platform:PublishToMavenLocal  -Ppublishing
+    maven { // snapshot repository
+        url "https://repository.apache.org/content/groups/snapshots"
+    }
     mavenCentral()
 }
 
