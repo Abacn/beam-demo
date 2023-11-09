@@ -1,1 +1,5 @@
 rootProject.name = 'beam-demo'
+
+include(":beamtest")
+include(":jsontest")
+include(":bsondatetest")

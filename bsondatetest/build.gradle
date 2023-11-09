@@ -1,0 +1,19 @@
+plugins {
+    id 'application'
+}
+
+application {
+    mainClass = "com.github.abacn.bson.BsonDateTest"
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation group: 'org.mongodb', name: 'mongo-java-driver', version: '3.12.14'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'
+}
+
+group = 'com.github.abacn'
