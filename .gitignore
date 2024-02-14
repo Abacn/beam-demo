@@ -3,3 +3,4 @@
 build
 run_*.bash
 out
+**/.DS_Store
