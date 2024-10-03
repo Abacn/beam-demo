@@ -1,5 +1,6 @@
 rootProject.name = 'beam-demo'
 
 include(":beamtest")
+include(":gcpmetricstest")
 include(":jsontest")
 include(":bsondatetest")
