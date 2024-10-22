@@ -4,3 +4,7 @@ include(":beamtest")
 include(":gcpmetricstest")
 include(":jsontest")
 include(":bsondatetest")
+include(":expansiontest")
+include 'expansiontest'
+include 'zetasqltest'
+

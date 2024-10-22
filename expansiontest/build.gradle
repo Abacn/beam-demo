@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "gradle.plugin.com.github.johnrengelman:shadow:7.1.2"
+    }
+}
+
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'application'
+}
+
+apply plugin : "java"
+
+def beam_version = "2.59.0"
+group = 'com.github.abacn'
+
+ext {
+    javaMainClass = "org.apache.beam.sdk.expansion.service.ExpansionService"
+}
+
+application {
+    mainClassName = javaMainClass
+}
+
+repositories {
+    mavenCentral()
+    // to publish to local maven repository, in the beam repo, run sth like
+    // ./gradlew :sdks:java:io:google-cloud-platform:PublishToMavenLocal  -Ppublishing
+    mavenLocal()
+}
+
+dependencies {
+    // compileOnly "com.google.auto.service:auto-service:1.0.1"
+    compileOnly "com.google.auto.service:auto-service-annotations:1.0.1"
+    implementation(group: 'org.apache.beam', name: 'beam-sdks-java-core', version: "$beam_version")
+    testImplementation "junit:junit:4.13.1"
+    testRuntimeOnly(group: 'org.apache.beam', name: 'beam-runners-direct-java', version: "$beam_version")
+    testRuntimeOnly(group: 'org.apache.beam', name: 'beam-runners-google-cloud-dataflow-java', version: "$beam_version")
+    implementation(group: 'org.apache.beam', name: 'beam-sdks-java-extensions-protobuf', version: "$beam_version")
+    implementation(group: 'org.apache.beam', name: 'beam-sdks-java-expansion-service', version: "$beam_version")
+    implementation(group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36')
+    implementation(group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: '5.4')
+
+    runtimeOnly(group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.36')
+}
+
+shadowJar {
+    zip64 true
+}
