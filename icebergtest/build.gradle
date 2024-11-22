@@ -1,0 +1,61 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "gradle.plugin.com.github.johnrengelman:shadow:7.1.2"
+    }
+}
+
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'application'
+}
+
+configurations.all {
+    resolutionStrategy {
+        force "org.slf4j:slf4j-api:1.7.36"
+    }
+}
+
+apply plugin : "java"
+
+def beam_version = "2.60.0"
+group = 'com.github.abacn'
+
+ext {
+    javaMainClass = "com.github.abacn.IcebergTest"
+}
+
+application {
+    mainClassName = javaMainClass
+}
+
+repositories {
+    mavenCentral()
+    // to publish to local maven repository, in the beam repo, run sth like
+    // ./gradlew :sdks:java:io:google-cloud-platform:PublishToMavenLocal  -Ppublishing
+    mavenLocal()
+    maven {
+        url 'https://repository.apache.org/content/groups/snapshots'
+    }
+}
+
+dependencies {
+    implementation(group: 'org.apache.beam', name: 'beam-sdks-java-core', version: "$beam_version")
+    // implementation(group: 'org.apache.beam', name: 'beam-runners-direct-java', version: "$beam_version")
+    implementation(group: 'org.apache.beam', name: 'beam-runners-google-cloud-dataflow-java', version: "$beam_version")
+    // implementation(group: 'org.apache.beam', name: 'beam-sdks-java-extensions-google-cloud-platform-core', version: "$beam_version") // transient dependency
+    implementation(group: 'org.apache.beam', name: 'beam-sdks-java-managed', version: "$beam_version")
+    implementation(group: 'org.apache.beam', name: 'beam-sdks-java-io-iceberg', version: "$beam_version")
+    implementation(group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36')
+
+    runtimeOnly(group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.36')
+    runtimeOnly "com.google.cloud.bigdataoss:gcs-connector:hadoop2-2.2.16" // TODO: file friction: this is needed, otherwise
+    // runtimeOnly "org.apache.iceberg:iceberg-gcp:1.4.2" // TODO: file friction: this is needed, otherwise
+}
+
+shadowJar {
+    zip64 true
+}

@@ -15,7 +15,7 @@ def zetasql_version = "2024.08.1"
 dependencies {
     implementation "com.google.zetasql:zetasql-client:$zetasql_version"
     implementation "com.google.zetasql:zetasql-jni-channel:$zetasql_version"
-    implementation "io.netty:netty-all:4.1.101.Final"
+    implementation "io.netty:netty-all:4.1.100.Final"
 }
 
 group = 'com.github.abacn'

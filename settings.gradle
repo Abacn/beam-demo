@@ -7,4 +7,6 @@ include(":bsondatetest")
 include(":expansiontest")
 include 'expansiontest'
 include 'zetasqltest'
+include 'shadowPluginTest'
+include 'icebergtest'
 
